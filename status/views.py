@@ -5,8 +5,9 @@ from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django import forms
-from.models import Post,Reply
-from .forms import StatusForm
+from .models import Post,Reply
+from userm.models import UserExtended
+from .forms import StatusForm,ReplyForm
 
 from .models import Post,Reply
 
@@ -22,48 +23,33 @@ def index(request):
     print(request.user)
     return HttpResponse(template.render(context, request))
 
-def send(request, user):
+def send(request):
+    print(str(request.user))
     if request.method == 'POST':
+        print("Reached here!")
         form = StatusForm(request.POST)
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             if form.is_valid():
-                context = {
-                    'form' : form,
-                    'user' : request.user
-                }
                 cd = form.cleaned_data
                 if cd['title'] != "" and cd['body'] != "":
                     status = Post(user=request.user,title=cd['title'],body=cd['body'],pub_date=timezone.now())
                     status.save()
-                    return HttpResponseRedirect(reverse('statmus:index'))
+                    return HttpResponseRedirect(reverse('status:index'))
                 else:
                     messages.info(request,message="No fields must be empty")
         else:
-            form = StatusForm()
+            return HttpResponse("You must be logged in to perform this action!")
     else:
-        return HttpResponse("You must be logged in to perform this action!")
+        form = StatusForm()
+    context = {
+        'form' : form,
+        'user' : request.user
+    }
     return render(request, 'status/send.html', context)
-
-def verify(request):
-    try:
-        title = request.POST['title']
-        body = request.POST['body']
-        username = request.POST['user']
-        date = timezone.now()
-        try:
-            user = User.objects.get(username=username)
-        except(KeyError, User.DoesNotExist) :
-            return HttpResponse("User does not exist!")
-    except :
-        return HttpResponse("Something went wrong...")
-    else :
-        post = Post(title=title, body=body, user=user, pub_date=date)
-        post.save()
-        return HttpResponseRedirect(reverse('status:index'))
 
 def user(request, username):
     try:
-        user = User.objects.get(username=username)
+        user = UserExtended.objects.get(username=username)
     except(KeyError, User.DoesNotExist):
         return HttpResponse("The user does not exist!")
     else :
@@ -86,33 +72,29 @@ def details(request, no):
         }
         return HttpResponse(template.render(context, request))
 
-def replyto(request, no, username):
-    try:
-        post = Post.objects.get(pk=no)
-        user = User.objects.get(username=username)
-    except(KeyError, Post.DoesNotExist, User.DoesNotExist):
-        return HttpResponse("The Post or User does not exist!")
-    else:
-        template = loader.get_template('status/replyto.html')
-        context = {
-            'post': post,
-            'user': user
-        }
-        return HttpResponse(template.render(context, request))
-
-def verifyr(request):
-    try:
-        temp = request.POST['reply']
-        username = request.POST['username']
-        postid = request.POST['postid']
+def replyto(request, no):
+    if request.user.is_authenticated:
         try:
-            user = User.objects.get(username=username)
-            post = Post.objects.get(pk=postid)
-        except(KeyError, User.DoesNotExist, Post.DoesNotExist) :
-            return HttpResponse("User or post does not exist!")
-    except :
-        return HttpResponse("Something went wrong...")
-    else :
-        reply = Reply(user=user,text=temp,post=post)
-        reply.save()
-        return redirect('status:details', no=postid)
+            post = Post.objects.get(pk=no)
+        except(KeyError, Post.DoesNotExist ):
+            return HttpResponse("The Post does not exist!")
+        if request.method == 'POST':
+            form = ReplyForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                if cd['text'] != "":
+                    reply = Reply(user = request.user, text=cd['text'], post=post)
+                    reply.save()
+                    return redirect('status:details', no=no)
+                else:
+                    return HttpResponse("The Text Field cannot be empty")
+        else:
+            form = ReplyForm()
+    else:
+        return HttpResponse("You have to be logged in to perform the action!")
+    context = {
+        'form': form,
+        'post': post,
+        'user': request.user
+    }
+    return render(request, 'status/replyto.html', context=context)

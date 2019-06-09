@@ -6,13 +6,10 @@
     </head>
     <body>
         <h1>Reply to {{post.title}}</h1>
-        <form method="post" action="{% url 'status:verifyr' %}">
+        <form method="post" action=".">
             {% csrf_token %}
-            <label for="reply">Reply:</label>
-            <input type="text" name="reply" id="reply" max_length="100"/><br>
-            <input type="hidden" name="username" id="username" value="{{ user.username }}"/>
-            <input type="hidden" name="postid" id="postid" value="{{ post.pk }}"/>
-            <input type="submit" value="Send Reply!" />
+            {{form.as_p}}
+            <p><input type="submit" value="Send Reply" /></p>
         </form>
     </body>
 </html>

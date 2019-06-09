@@ -7,7 +7,7 @@
 <body>
 <h1> {{ post.title }}</h1>
     {{post.body | truncatewords:50 | linebreaksbr}}<br>
-    <a href="{% url 'status:replyto' post.pk user %}">Reply</a>
+    <a href="{% url 'status:replyto' post.pk %}">Reply</a>
     {% if post.reply_set.all.first %}
     <ul>
     {% for reply in post.reply_set.all %}

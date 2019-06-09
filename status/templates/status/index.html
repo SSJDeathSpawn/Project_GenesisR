@@ -9,7 +9,7 @@
 <p>In this part of the website you will be able to post out statuses that allow fans to see what you're up to<br>
 This also lets them now that you're not fully dead if you don't produce any content &#128523</p>
 {% if user %}
-    <a href="{% url 'status:post' user %}"> Post a Status</a> <br>
+    <a href="{% url 'status:post' %}"> Post a Status</a> <br>
     <a href="{% url 'status:user' user %}"> Visit your page</a>
 {% else %}
     <a href="{% url 'user:login' %}">Login</a>
