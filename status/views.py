@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404, reverse, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader
+from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django import forms
+from.models import Post,Reply
+from .forms import StatusForm
 
 from .models import Post,Reply
 
@@ -20,11 +23,26 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def send(request, user):
-    template = loader.get_template('status/send.html')
-    context = {
-        'user' : user
-    }
-    return HttpResponse(template.render(context, request))
+    if request.method == 'POST':
+        form = StatusForm(request.POST)
+        if request.user.is_authenticated():
+            if form.is_valid():
+                context = {
+                    'form' : form,
+                    'user' : request.user
+                }
+                cd = form.cleaned_data
+                if cd['title'] != "" and cd['body'] != "":
+                    status = Post(user=request.user,title=cd['title'],body=cd['body'],pub_date=timezone.now())
+                    status.save()
+                    return HttpResponseRedirect(reverse('statmus:index'))
+                else:
+                    messages.info(request,message="No fields must be empty")
+        else:
+            form = StatusForm()
+    else:
+        return HttpResponse("You must be logged in to perform this action!")
+    return render(request, 'status/send.html', context)
 
 def verify(request):
     try:
