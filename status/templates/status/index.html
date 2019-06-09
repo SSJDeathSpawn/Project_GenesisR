@@ -1,0 +1,18 @@
+<html>
+<head>
+{% load static %}
+<title> Project Genesis/Status </title>
+</head>
+<body>
+<h1>Index</h1>
+<p>Hello and welcome to our index page of Project Genesis/Status page</p>
+<p>In this part of the website you will be able to post out statuses that allow fans to see what you're up to<br>
+This also lets them now that you're not fully dead if you don't produce any content &#128523</p>
+{% if user %}
+    <a href="{% url 'status:post' user %}"> Post a Status</a> <br>
+    <a href="{% url 'status:user' user %}"> Visit your page</a>
+{% else %}
+    <a href="{% url 'user:login' %}">Login</a>
+{% endif %}
+</body>
+</html>

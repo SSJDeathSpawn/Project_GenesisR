@@ -1,0 +1,14 @@
+<html>
+<head>
+<title> Project Genesis/Status </title>
+<meta charset="UTF-8" />
+</head>
+<body>
+<h1>{{ user.username }}</h1>
+    <ul>
+        {% for post in user.post_set.all %}
+            <li><a href="{% url 'status:details' post.pk %}">{{ post.title }}</a>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title> Project Genesis/Login </title>
+    </head>
+    <body>
+        <h1>Log in</h1>
+        <p>Please, use the following form to log=in:</p>
+        <form action="." method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" vlaue-"Log-In"></p>
+        </form>
+    </body>
+</html>

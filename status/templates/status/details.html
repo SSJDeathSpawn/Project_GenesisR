@@ -1,0 +1,19 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title> Project Genesis/Status </title>
+{% load static %}
+</head>
+<body>
+<h1> {{ post.title }}</h1>
+    {{post.body | truncatewords:50 | linebreaksbr}}<br>
+    <a href="{% url 'status:replyto' post.pk user %}">Reply</a>
+    {% if post.reply_set.all.first %}
+    <ul>
+    {% for reply in post.reply_set.all %}
+        <li>{{ reply.user }} - {{ reply.text }}
+    {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>
