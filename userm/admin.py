@@ -2,4 +2,4 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import UserExtended
 
-admin.site.register(UserExtended, UserAdmin)
+#admin.site.register(UserExtended, UserAdmin)
