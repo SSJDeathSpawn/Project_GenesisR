@@ -53,7 +53,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'prjgenesis.urls'
 
-AUTH_USER_MODEL = 'userm.UserExtended'
+AUTH_USER_MODEL = 'userm.UserExtendedR'
 
 TEMPLATES = [
     {

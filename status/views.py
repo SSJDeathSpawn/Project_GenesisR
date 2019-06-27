@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django import forms
 from .models import Post,Reply
-from userm.models import UserExtended
+from userm.models import UserExtendedR
 from .forms import StatusForm,ReplyForm
 
 from .models import Post,Reply
@@ -49,7 +49,7 @@ def send(request):
 
 def user(request, username):
     try:
-        user = UserExtended.objects.get(username=username)
+        user = UserExtendedR.objects.get(username=username)
     except(KeyError, User.DoesNotExist):
         return HttpResponse("The user does not exist!")
     else :
