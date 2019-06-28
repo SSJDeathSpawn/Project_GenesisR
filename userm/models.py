@@ -26,14 +26,17 @@ class UserExtendedManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 class UserExtendedR(AbstractBaseUser, PermissionsMixin):
+    class Meta:
+        verbose_name_plural = "users"
+        verbose_name = "user"
     email = models.EmailField('email address', unique=True)
-    username = models.CharField(max_length=25, unique=True)
-    aboutme = models.CharField(max_length=200, null=True)
-    avatar = models.ImageField(blank=True, null=True)
-    date_joined = models.DateField(default=timezone.now)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
+    username = models.CharField('username', max_length=25, unique=True)
+    aboutme = models.CharField('bio', max_length=200, null=True)
+    avatar = models.ImageField('avatar', blank=True, null=True, upload_to='images/')
+    date_joined = models.DateField('date joined',default=timezone.now)
+    is_active = models.BooleanField('is active', default=True)
+    is_staff = models.BooleanField('is staff', default=False)
+    is_superuser = models.BooleanField('is superuser', default=False)
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["email"]

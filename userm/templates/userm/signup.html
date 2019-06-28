@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title> Project Genesis/Login </title>
+    </head>
+    <body>
+        <h1>Sign Up</h1>
+        <p>Use the following form to signup:</p>
+        <form action="." method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value-"Sign-Up"></p>
+        </form>
+    </body>
+</html>

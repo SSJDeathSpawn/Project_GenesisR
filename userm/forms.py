@@ -9,7 +9,7 @@ class LoginForm(forms.Form):
     
 class UserSignUpForm(UserCreationForm):
     class Meta:
-        fields = ('username', 'password1', 'password2', 'email')
+        fields = ('username', 'email', 'password1', 'password2')
         model = get_user_model()
 
 class UserChangeFormR(admin.UserChangeForm):
@@ -19,22 +19,3 @@ class UserChangeFormR(admin.UserChangeForm):
 class UserCreationFormR(admin.UserCreationForm):
     class Meta:
         fields = '__all__'
-
-class UserAdminR(admin.UserAdmin):
-    class Meta:
-        fieldsets = (
-        (None, {'fields': ('username', 'password')}),
-        (_('Personal info'), {'fields': ('username', 'email')}),
-        (_('Permissions'), {
-            'fields': ('is_active', 'is_staff', 'is_superuser' ),
-        }),
-        (_('Important dates'), {'fields': ('date_joined')}),
-    )
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2'),
-        }),
-    ) 
-    form = UserChangeForm
-    add_form = UserSignUpForm

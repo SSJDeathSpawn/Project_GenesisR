@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title> Project Genesis/Login </title>
+    </head>
+    <body>
+        <h1>{{user.username}}</h1>
+        <br />
+        <div>
+            <img src="{{ user.avatar.url }}" alt="{{user.username}}">
+        </div>
+        <br />
+        <div>
+            Bio: {{ user.aboutme | truncatewords:50 | linebreaksbr}}
+        </div>
+    </body>
+<html>

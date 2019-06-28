@@ -50,7 +50,7 @@ def send(request):
 def user(request, username):
     try:
         user = UserExtendedR.objects.get(username=username)
-    except(KeyError, User.DoesNotExist):
+    except(KeyError, UserExtendedR.DoesNotExist):
         return HttpResponse("The user does not exist!")
     else :
         template = loader.get_template('status/user.html')

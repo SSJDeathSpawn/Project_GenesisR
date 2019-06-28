@@ -54,6 +54,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'prjgenesis.urls'
 
 AUTH_USER_MODEL = 'userm.UserExtendedR'
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
+MEDIA_URL = '/media/'
 
 TEMPLATES = [
     {
