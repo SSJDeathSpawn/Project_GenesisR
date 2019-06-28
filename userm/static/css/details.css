@@ -1,0 +1,15 @@
+.det-title {
+    display: block;
+    padding-bottom: 10px;
+}
+
+.det-body {
+    padding-bottom: 30px;
+}
+
+.det-reply {
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

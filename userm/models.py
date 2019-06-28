@@ -2,6 +2,17 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
+class FollowContact(models.Model):
+    class Meta:
+        verbose_name = "Contact"
+        verbose_name_plural = "Contacts"
+
+    user_from = models.ForeignKey('userm.UserExtendedR', related_name="user_from", on_delete=models.CASCADE)
+    user_to= models.ForeignKey('userm.UserExtendedR', related_name="user_to", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.user_from.username + "-" + self.user_to.username
+
 class UserExtendedManager(BaseUserManager):
     def create_user(self, username, email, password, **extra_fields):
         if not email:
@@ -44,7 +55,7 @@ class UserExtendedR(AbstractBaseUser, PermissionsMixin):
     objects = UserExtendedManager()
 
     def __str__(self):
-        return "@{}".format(self.username)
+        return "{}".format(self.username)
 
     def get_short_name(self):
         return self.username

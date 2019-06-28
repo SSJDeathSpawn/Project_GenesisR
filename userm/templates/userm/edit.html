@@ -1,0 +1,23 @@
+{% extends "userm/base.html" %}
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %} Project Genesis/Edit User{% endblock %}</title>
+    </head>
+    <body>
+        {% block content %}
+            <h3>Edit User Details:</h3>
+            <div class="edit">
+                <form method="post" action=".">
+                    <table border=0>
+                    {{ form.as_table }}
+                    {% csrf_token %}
+                    <table>
+                    <tr>
+                        <input type="submit" value="Accept Changes" />
+                    </tr>
+                </form>
+            </div>
+        {% endblock %}
+    </body>
+</html>

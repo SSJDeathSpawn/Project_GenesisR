@@ -1,15 +1,26 @@
+{% extends "userm/base.html" %}
+{% load static %}
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title> Project Genesis/Login </title>
+        <title>{% block title %}Project Genesis/Login{% endblock title %}</title>
+        {% block imports %}
+        <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+        {% endblock imports %}
     </head>
     <body>
+        {% block content %}
         <h1>Sign Up</h1>
         <p>Use the following form to signup:</p>
-        <form action="." method="post">
-        {{ form.as_p }}
+        <form action="." method="post" class="signup">
+            <table border=0>
+        {{ form.as_table }}
         {% csrf_token %}
-        <p><input type="submit" value-"Sign-Up"></p>
+        <tr>
+        <td><input type="submit" value-"Sign-Up"></td>
+        </tr>
+        </table>
         </form>
+        {% endblock content %}
     </body>
 </html>

@@ -1,0 +1,9 @@
+.signup input {
+    margin-bottom: 10px;
+}
+
+.signup ul {
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}

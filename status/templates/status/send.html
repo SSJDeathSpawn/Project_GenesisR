@@ -1,16 +1,26 @@
+{% extends "status/base.html" %}
+{% load static %}
 <html>
     <head>
         <meta charset='UTF-8' />
-        <title> Project Genesis/Status </title>
-        {% load static %}
+        <title>{% block title %}Project Genesis/Status{% endblock title %}</title>
+        {% block imports %}
+        <link rel="stylesheet" href="{% static 'css/send.css' %}">
+        {% endblock imports %}
     </head>
     <body>
+        {% block content %}
         <h1>A Form To Send Out Statuses</h1>
-        <form action="." method="post">
-            {{ form.as_p }}
+        <form action="." method="post" class="send">
+        <table>
+            {{ form.as_table }}
             {% csrf_token %}
-            <p><input type="submit" value="Post"></p>
+            <tr>
+                <td><input type="submit" value="Post"></td>
+            </tr>
+        </table>
         </form>
+        {% endblock content %}
     </body>
 </html>
         

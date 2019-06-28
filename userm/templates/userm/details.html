@@ -1,17 +1,31 @@
+{% extends "userm/base.html" %}
+{% load static %}
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title> Project Genesis/Login </title>
+        <title>{% block title %}Project Genesis/User Details{% endblock %}</title>
+        {% block imports %}
+            <link rel="stylesheet" href="{% static 'css/details.css' %}">
+        {% endblock imports %}
     </head>
     <body>
-        <h1>{{user.username}}</h1>
+        {% block content %}
+        <h1 class="details-username">{{user.username}}</h1>
         <br />
-        <div>
-            <img src="{{ user.avatar.url }}" alt="{{user.username}}">
+        <div class="details-avatar">
+            {% if not user.avatar %}
+            <h3> The user doesn't have any image</h3>
+            {% else %}
+            <img src="{{ user.avatar.url }}" alt="{{user.username}}" height=300 width=400>
+            {% endif %}
         </div>
         <br />
-        <div>
-            Bio: {{ user.aboutme | truncatewords:50 | linebreaksbr}}
+        <div class="details-bio">
+            Bio: {{ user.aboutme | linebreaksbr}}
         </div>
+        {% if contact %}
+            <a href="{% url 'userm:friend' user.username request.user.username %}" class="btn btn-info" role="button">Reply</a> 
+        {% endif %}
+        {% endblock %}
     </body>
 <html>

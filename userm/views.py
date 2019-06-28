@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login, settings, get_user_model
+from django.contrib.auth import authenticate, login, settings, get_user_model, logout
 from django.db.models import Model
 from django.views.generic.detail import DetailView 
+from django.contrib.auth.decorators import login_required
 
-from .forms import LoginForm, UserSignUpForm
+from .forms import LoginForm, UserSignUpForm, UserEditForm
 from .models import UserExtendedR
 
 def user_login(request):
@@ -17,7 +18,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponse('Authenticated successfully')
+                    return redirect('status:index')
                 else:
                     return HttpResponse('Disabled account')
             else:
@@ -68,3 +69,47 @@ def user_details(request, username):
             'user' : user,
         }
         return render(request, 'userm/details.html', context=context)
+
+def edit_user(request):
+    if not request.user.is_authenticated:
+        return HttpResponse("You must be logged in to do that!")
+    user = request.user
+    if request.method == 'POST':
+        initial = {
+            'username' : user.username,
+            'avatar' : user.avatar,
+            'aboutme' : user.aboutme
+        }
+        form = UserEditForm(request.POST, request.FILES, initial=initial)
+        if form.is_valid():
+            cd = form.cleaned_data
+            try:
+                user_c = UserExtendedR.objects.get(username=cd['username'])
+            except(KeyError, UserExtendedR.DoesNotExist):
+                request.user.username = cd['username']
+                request.user.avatar = cd['avatar']
+                request.user.aboutme = cd['aboutme']
+                request.user.save()
+                return HttpResponse("Successfully done!")
+            else:
+                if user.request == user_c:
+                    request.user.username = cd['username']
+                    request.user.avatar = cd['avatar']
+                    request.user.aboutme = cd['aboutme']
+                    request.user.save()
+                    return HttpResponse("Successfully edited!")
+                else:
+                    return HttpResponse("That username has already been taken!")
+    else:
+        form = UserEditForm()
+    context = {
+        'user' : user,
+        'form' : form
+    }
+    return render(request, 'userm/edit.html', context=context)
+
+@login_required(login_url='/userm/login')
+def logout_user(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return redirect('status:index')

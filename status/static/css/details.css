@@ -1,0 +1,13 @@
+.details-username {
+    color: black;
+    margin: 5px;
+}
+
+.details-avatar {
+    margin: 5px;
+}
+
+.details-bio {
+    padding: 5px;
+    margin-bottom: 10px;
+}

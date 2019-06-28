@@ -1,19 +1,25 @@
+{% extends "status/base.html" %}
+{% load static %}
 <html>
 <head>
 <meta charset="UTF-8">
-<title> Project Genesis/Status </title>
-{% load static %}
+<title>{% block title %}Project Genesis/Status{% endblock title %}</title>
+{% block imports %}
+<link rel="stylesheet" href="{% static 'css/details.css' %}">
+{% endblock imports %}
 </head>
 <body>
-<h1> {{ post.title }}</h1>
-    {{post.body | truncatewords:50 | linebreaksbr}}<br>
-    <a href="{% url 'status:replyto' post.pk %}">Reply</a>
+{% block content %}
+<h1 class="det-title"> {{ post.title }}</h1>
+    <div class="det-body">{{post.body | linebreaksbr}}</div>
+    <a href="{% url 'status:replyto' post.pk %}" class="btn btn-info" role="button">Reply</a>
     {% if post.reply_set.all.first %}
     <ul>
     {% for reply in post.reply_set.all %}
-        <li>{{ reply.user }} - {{ reply.text }}
+        <div class="det-reply"><li>{{ reply.user }} - {{ reply.text }}</div>
     {% endfor %}
     </ul>
     {% endif %}
+{% endblock content %}
 </body>
 </html>
