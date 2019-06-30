@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render,get_object_or_404, redirect
+from django.core.files import File
 from .models import *
 from .forms import *
 
@@ -44,7 +45,9 @@ def add_item(request):
         form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
             cd = form.cleaned_data
-            item = Item(name=cd['name'], decscription=cd['description'], slug=cd['slug'], price=cd['price'], stock=cd['stock'], seller=user, category=cd['category'])
+            category = Category.objects.get(name=cd['category'])
+            item = Item(name=cd['name'], description=cd['description'], slug=cd['slug'], price=cd['price'], stock=cd['stock'], seller=user, category=category)
+            print(type(cd['main_image']))
             photo = Photo(photo=cd['main_image'], item=item)
             item.save()
             photo.save()
