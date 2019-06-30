@@ -4,16 +4,19 @@
     <head>
         <title>{% block title %}Project Genesis/Status{% endblock title %}</title>
         <meta charset="UTF-8" />
+        {% block imports %}
+        <link rel="stylesheet" href="{% static 'status/replyto.css' %}">
+        {% endblock imports %}
     </head>
     <body>
         {% block content %}
         <h1>Reply to {{post.title}}</h1>
         <form method="post" action=".">
-        <table>
+        <table border=0>
             {{form.as_table}}
             {% csrf_token %}
             <tr>
-            <td><input type="submit" class="btn btn-custom" role="button" value="Send Reply" /></td>
+            <td colspan=2><input type="submit" class="btn btn-custom" role="button" value="Send Reply" /></td>
             </tr>
         </table>
         </form>

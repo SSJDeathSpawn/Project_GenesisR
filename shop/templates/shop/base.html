@@ -3,12 +3,22 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Exo+2|Open+Sans&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'shop/main.css' %}">
         {% block imports %} {% endblock imports%}
         <title>{% block title %}{% endblock %}</title>
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "200px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+            }
+        </script>
     </head>
     <body>
         <div class="page-header">
@@ -17,6 +27,7 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
+                    <li><a onclick="openNav()" style="cursor:pointer;"><span class="glyphicon glyphicon-list" ></span>Category</a></li>
                     <li><a href="{% url 'status:index' %}">Home</a></li>
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'status:user' user.username %}">Your Feed</a></li>
@@ -41,9 +52,11 @@
         <div class="cart">
                 Your cart is empty
         </div>
-         <div class="content container">
+        {% block sidebar %}
+        {% endblock sidebar %}
+        <div class="content container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     {% block content %}
                     {% endblock %}
                 </div>

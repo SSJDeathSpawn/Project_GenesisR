@@ -1,0 +1,20 @@
+.title {
+    font-family: 'Exo 2', sans-serif;
+}
+
+td input,
+select {
+    margin-bottom: 10px;
+}
+
+table {
+    margin-bottom: 20px
+}
+
+th {
+    vertical-align: top;
+}
+
+.btn.btn-custom {
+    padding: 5px 20px;
+}

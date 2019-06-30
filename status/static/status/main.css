@@ -6,9 +6,9 @@
     margin-bottom: 0px;
 }
 
-h1 a,
-h1 a:hover {
-    color: #08758A;
+.page-header h1 a,
+.page-header h1 a:hover {
+    color: #1675CF;
     text-decoration: none;
 }
 

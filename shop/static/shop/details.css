@@ -1,8 +1,3 @@
-.title {
-    font-family: 'Exo 2', sans-serif;
-    margin-bottom: 20px;
-}
-
 .sidebar {
     height: 100%;
     width: 0;
@@ -26,30 +21,40 @@
     background-color: white;
 }
 
-.sidebar ul {
+ul {
     display: inline;
     margin: 0px;
     padding: 0px;
     list-style-type: none;
 }
 
-.sidebar li a {
+li a {
     padding: 10px 0px;
     display: block;
     color: black;
     background-color: white;
 }
 
-ul {
-    margin: 0px;
-    padding: 0px;
-    list-style-type: none;
+.photos .photo img {
+    height: 10%;
+    width: 10%;
+    margin-left: 20px;
 }
 
-li a {
+.product-detail img {
+    height: 35%;
+    width: 35%;
+    float: left;
+}
+
+.product-detail a {
     color: black;
 }
 
-li a:hover {
-    color: purple;
+.product-detail .title {
+    font-family: 'Exo 2', sans-serif;
+}
+
+.details {
+    margin-left: 400px;
 }

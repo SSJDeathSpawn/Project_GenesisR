@@ -1,8 +1,11 @@
-from django.shortcuts import render,get_object_or_404
+from django.http import HttpResponse
+from django.shortcuts import render,get_object_or_404, redirect
 from .models import *
+from .forms import *
 
 def index(request):
-    return render(request, 'shop/index.html', context={'user':request.user})
+    categories = Category.objects.all()
+    return render(request, 'shop/index.html', context={'user':request.user, 'categories': categories})
 
 def product_list(request, category_slug=None):
     category=None
@@ -20,6 +23,31 @@ def product_list(request, category_slug=None):
         'user': user})
 
 def product_detail(request, id, slug):
+    form = AddImageForm()
     user = request.user
+    categories = Category.objects.all()
     product = get_object_or_404(Item, id=id, slug=slug, available=True)
-    return render(request, 'shop/detail.html', {'product': product, 'user': user})
+    if user.is_authenticated and user == product.seller and request.method == 'POST':
+        form = AddImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            cd = form.cleaned_data
+            photo = Photo(photo=cd['image'], item=product)
+            photo.save()
+    return render(request, 'shop/detail.html', {'product': product, 'user': user, 'categories' : categories, 'form': form})
+
+def add_item(request):
+    user = request.user
+    if not user.is_authenticated:
+        return HttpResponse('You must be logged in to perform this option!')
+    form=ItemForm()
+    if request.method == 'POST':
+        form = ItemForm(request.POST, request.FILES)
+        if form.is_valid():
+            cd = form.cleaned_data
+            item = Item(name=cd['name'], decscription=cd['description'], slug=cd['slug'], price=cd['price'], stock=cd['stock'], seller=user, category=cd['category'])
+            photo = Photo(photo=cd['main_image'], item=item)
+            item.save()
+            photo.save()
+            return redirect('shop/list', cd['category'].name)
+
+    return render(request, 'shop/add.html', {'user': user, 'form': form})

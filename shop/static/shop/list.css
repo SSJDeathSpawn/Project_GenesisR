@@ -1,18 +1,63 @@
 .sidebar {
-    display: block;
-    float: left;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.25s;
+    padding-top: 60px;
 }
 
-.product-list {
-    float: left;
+.title {
+    margin-bottom: 20px;
+}
+
+.sidebar a:hover {
+    color: white;
+    background-color: black;
+    text-decoration: none;
+}
+
+.sidebar a {
+    color: black;
+    background-color: white;
+    text-decoration: none;
 }
 
 div#price {
+    margin-top: 0px;
+    padding-top: 0px;
     text-align: center;
+}
+
+div#title {
+    text-align: center;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+.item {
+    width: 25%;
+    height: 25%;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    float: left;
+    margin: 0px 15px;
+}
+
+.product-list {
+    float: none;
 }
 
 .product-list a {
     color: black;
+}
+
+.product-list a:hover {
+    color: purple;
 }
 
 ul {
@@ -23,6 +68,7 @@ ul {
 }
 
 li a {
+    padding: 10px 0px;
     display: block;
     color: black;
     background-color: white;

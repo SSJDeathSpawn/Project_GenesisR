@@ -1,24 +1,35 @@
 {% extends "shop/base.html" %}
 {% load static %}
-<html>
-    <head>
-        <title>{% block title%}Project Genesis/Shop Index{% endblock title%}</title>
-        {% block imports %}
-        <link rel="stylesheet" href="{% static 'shop/index.css' %}" >
-        {% endblock imports %}
-    </head>
-    <body>
-    {% block content %}
-        <h1 class="title">Welcome to the Project Genesis Shop</h1>
-        <p style="font-size:1.2em;padding-bottom:10px;">Here you can find various items being sold by your favourite 
-        artists, companies, youtubers etc. This site is was built to 
-        promote an easy way of communication as not a lot of people will now 
-        a person is selling some item unless they directly follow him on twitter, 
-        facebook etc.</p>
-        <h1 class="title">At the top our list:</h1>
+{% block title%}Project Genesis/Shop Index{% endblock title%}
+
+{% block imports %}
+<link rel="stylesheet" href="{% static 'shop/index.css' %}" >
+{% endblock imports %}
+
+{% block sidebar %}
+<div id="mySidenav" class="sidebar">
+        <span style="font-size:2em;">Categories</span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="glyphicon glyphicon-remove"></span></a>
         <ul>
-            <li>Some things</li>
+            {% for c in categories %}
+                <li {% if category.slug == c.slug %}class="selected"{%endif%} style="font-size=1.6em;">
+                    <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                </li>
+            {% endfor %}
         </ul>
-    {% endblock content %}
-    </body>
-</html>
+</div>
+{% endblock sidebar %}
+
+{% block content %}
+    <h1 class="title">Welcome to the Project Genesis Shop</h1>
+    <p style="font-size:1.2em;padding-bottom:10px;">Here you can find various items being sold by your favourite 
+    artists, companies, youtubers etc. This site is was built to 
+    promote an easy way of communication as not a lot of people will now 
+    a person is selling some item unless they directly follow him on twitter, 
+    facebook etc.</p>
+    <h1 class="title">Our categories:</h1>
+    <ul>
+        {% for category in categories %}
+            <li><a href="{% url 'shop:list' category.slug %}">{{category.name}}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
