@@ -1,15 +1,22 @@
+{% extends "status/base.html" %}
+{% load static %}
 <html>
     <head>
-        {% load static %}
-        <title> Project Genesis/Status </title>
+        <title>{% block title %}Project Genesis/Status{% endblock title %}</title>
         <meta charset="UTF-8" />
     </head>
     <body>
+        {% block content %}
         <h1>Reply to {{post.title}}</h1>
         <form method="post" action=".">
+        <table>
+            {{form.as_table}}
             {% csrf_token %}
-            {{form.as_p}}
-            <p><input type="submit" value="Send Reply" /></p>
+            <tr>
+            <td><input type="submit" class="btn btn-custom" role="button" value="Send Reply" /></td>
+            </tr>
+        </table>
         </form>
+        {% endblock content %}
     </body>
 </html>

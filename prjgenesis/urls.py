@@ -18,11 +18,14 @@ from django.urls import include
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('status/', include('status.urls')),
     path('userm/',include('userm.urls')),
+    path('shop/', include('shop.urls')),
+    path('', views.redirect_status)
 ]
 
 if settings.DEBUG: # new

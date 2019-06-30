@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django import forms
-from .models import Post,Reply
+from .models import *
 from userm.models import UserExtendedR
 from .forms import StatusForm,ReplyForm
 
@@ -98,3 +98,34 @@ def replyto(request, no):
         'user': request.user
     }
     return render(request, 'status/replyto.html', context=context)
+
+
+def like(request, id):
+    try:
+        post = Post.objects.get(pk=id)
+    except(KeyError, Post.DoesNotExist):
+        return HttpResponse('Post does not exist')
+    else:
+        if request.user.is_authenticated:
+            post.likes += 1
+            post.save()
+            request.user.post_liked.add(post)
+            request.user.save()
+        else:
+            return HttpResponse('You have to be logged in to do this!')
+    return redirect('status:details', id)
+
+def unlike(request,id):
+    try:
+        post = Post.objects.get(pk=id)
+    except(KeyError, Post.DoesNotExist):
+        return HttpResponse('Post does not exist')
+    else:
+        if request.user.is_authenticated:
+            post.likes -= 1
+            post.save()
+            request.user.post_liked.remove(post)
+            request.user.save()
+        else:
+            return HttpResponse('You have to be logged in to do this!')
+    return redirect('status:details', id)

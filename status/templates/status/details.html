@@ -1,22 +1,30 @@
 {% extends "status/base.html" %}
 {% load static %}
+{% load filters %}
 <html>
 <head>
 <meta charset="UTF-8">
 <title>{% block title %}Project Genesis/Status{% endblock title %}</title>
 {% block imports %}
-<link rel="stylesheet" href="{% static 'css/details.css' %}">
+<link rel="stylesheet" href="{% static 'status/details.css' %}">
 {% endblock imports %}
 </head>
 <body>
 {% block content %}
 <h1 class="det-title"> {{ post.title }}</h1>
     <div class="det-body">{{post.body | linebreaksbr}}</div>
-    <a href="{% url 'status:replyto' post.pk %}" class="btn btn-info" role="button">Reply</a>
+    <a href="{% url 'status:replyto' post.pk %}" class="btn btn-custom" role="button">Reply</a>
+    {% if user.is_authenticated %}
+        {% if user|get_post_if_liked_by_user:post %}
+            <div class="like active">{{ post.likes }}<a href="{% url 'status:unlike' post.pk %}"><span class="glyphicon glyphicon-heart"></span></a></div>
+        {% else %}
+            <div class="like">{{ post.likes }}<a href="{% url 'status:like' post.pk %}"><span class="glyphicon glyphicon-heart"></span></a></div>
+        {% endif %}
+    {% endif %}
     {% if post.reply_set.all.first %}
     <ul>
     {% for reply in post.reply_set.all %}
-        <div class="det-reply"><li>{{ reply.user }} - {{ reply.text }}</div>
+        <div class="det-reply"><li><a href="{% url 'user:user' reply.user %}">{{ reply.user }}</a> - {{ reply.text }}</div>
     {% endfor %}
     </ul>
     {% endif %}

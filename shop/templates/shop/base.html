@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Exo+2|Open+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'shop/main.css' %}">
+        {% block imports %} {% endblock imports%}
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <div class="page-header">
+            <h1><a href="{% url 'status:index' %}">Project Genesis</a></h1>
+        </div>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'status:index' %}">Home</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'status:user' user.username %}">Your Feed</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'shop:index' %}">Shop</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'user:edit' %}">Profile</a></li>
+                    {% endif %}
+                </ul>
+                {% if user.is_authenticated %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'user:logout' %}"><span class="glyphicon glyphicon-log-out"></span>&nbspLogout</a></li>
+                    </ul>
+                {% else %}  
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'user:signup' %}"><span class="glyphicon glyphicon-user"></span>&nbspSign Up</a></li>
+                        <li><a href="{% url 'user:login' %}"><span class="glyphicon glyphicon-log-in"></span>&nbspLogin</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+        </nav>
+        <div class="cart">
+                Your cart is empty
+        </div>
+         <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

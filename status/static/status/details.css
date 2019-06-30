@@ -1,0 +1,53 @@
+.det-title {
+    padding-bottom: 10px;
+    font-family: 'Exo 2', sans-serif;
+    text-transform: capitalize;
+}
+
+.det-body {
+    display: block;
+    padding: 5px 10px 10px 10px;
+    margin-bottom: 30px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5em;
+    background-color: white;
+    border: 1px dashed black;
+}
+
+.like,
+.like a {
+    display: inline;
+    color: black;
+    background-color: white;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.like.active,
+.like.active a {
+    display: inline;
+    color: red;
+    background-color: white;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.like.active a:hover {
+    color: rgb(199, 0, 0);
+}
+
+.btn.btn-custom {
+    margin: 0px 0px 10px 0px;
+}
+
+.det-body::first-letter {
+    font-size: 1.7em
+}
+
+.det-reply {
+    background-color: white;
+    border: 1px solid black;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+}

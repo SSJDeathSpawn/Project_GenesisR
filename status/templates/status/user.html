@@ -3,6 +3,9 @@
 <html>
 <head>
 <title>{% block title %}Project Genesis/Status{% endblock title %}</title>
+{% block imports %}
+<link rel="stylesheet" href="{% static 'status/user.css' %}">
+{% endblock imports %}
 <meta charset="UTF-8" />
 </head>
 <body>
@@ -10,7 +13,7 @@
     <h1>{{ user.username }}</h1>
     <ul>
         {% for post in user.post_set.all %}
-            <li><a href="{% url 'status:details' post.pk %}">{{ post.title }}</a>
+            <li><a href="{% url 'status:details' post.pk %}" class="list">{{ post.title }}</a>
         {% endfor %}
     </ul>
     {% endblock content %}

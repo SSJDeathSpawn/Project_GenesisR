@@ -3,7 +3,13 @@
 }
 
 .signup ul {
-    margin: 0px;
+    margin-bottom: 10px;
+    margin-left: 0px;
     padding: 0px;
     list-style-type: none;
+}
+
+th {
+    vertical-align: top;
+    text-transform: capitalize;
 }

@@ -25,10 +25,7 @@ SECRET_KEY = 'e*6=!+8zqi45&pg55#oek2w7v-5&!0rmk0uvzz)-o8m7vn0&3q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '2f2823e3.ngrok.io',
-]
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -41,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'userm.apps.UsermConfig',
     'status.apps.StatusConfig',
+    'shop.apps.ShopConfig',
 ]
 
 MIDDLEWARE = [

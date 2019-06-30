@@ -1,15 +1,13 @@
-.det-title {
-    display: block;
-    padding-bottom: 10px;
+.details-username {
+    color: black;
+    margin: 5px;
 }
 
-.det-body {
-    padding-bottom: 30px;
+.details-avatar {
+    margin: 5px;
 }
 
-.det-reply {
-    background-color: white;
-    border: 1px solid black;
-    margin-top: 5px;
-    margin-bottom: 5px;
+.details-bio {
+    padding: 5px;
+    margin-bottom: 10px;
 }

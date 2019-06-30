@@ -14,12 +14,12 @@
         <p>Use the following form to signup:</p>
         <form action="." method="post" class="signup">
             <table border=0>
-        {{ form.as_table }}
-        {% csrf_token %}
-        <tr>
-        <td><input type="submit" value-"Sign-Up"></td>
-        </tr>
-        </table>
+                {{ form.as_table }}
+                {% csrf_token %}
+                <tr>
+                    <td colspan=2><input type="submit" class="btn btn-custom" value="Signup" style="padding-left:20px;padding-right:20px;margin-left:100px"></td>
+                </tr>
+            </table>
         </form>
         {% endblock content %}
     </body>

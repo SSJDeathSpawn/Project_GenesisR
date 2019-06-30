@@ -12,8 +12,23 @@ h1 a:hover {
     text-decoration: none;
 }
 
+.btn.btn-custom {
+    color: #fff;
+    background-color: #d32525;
+    border-color: #9e1212;
+    border-radius: 5px;
+}
+
+.btn.btn-custom:hover {
+    color: #fff;
+    background-color: #aa1d1d;
+    border-color: #861313;
+    border-radius: 5px;
+}
+
 body {
     background-color: #228FD2;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .content {

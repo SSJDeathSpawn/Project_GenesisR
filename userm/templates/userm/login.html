@@ -10,15 +10,14 @@
     </head>
     <body>
         {% block content %}
-            <h1>Log in</h1>
-            <p style="font-size:1.2em">Please, use the following form to login:</p>
+            <h1 style="padding-bottom:10px;" class="heading">Log in</h1>
             <div class="login-form">
                 <form action="." method="post">
                     <table border=0>
                         {{ form.as_table }}
                         {% csrf_token %}
                     <tr>
-                        <td><input type="submit" value-"Log-In"></td>
+                        <td colspan=2 align="center"><input type="submit" class="btn btn-custom" value="Login"></td>
                     </tr>
                     </table>
                 </form>

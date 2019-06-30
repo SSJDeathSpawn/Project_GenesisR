@@ -1,0 +1,49 @@
+.page-header {
+    background-color: #8A0875;
+    font-family: 'Kaushan Script', cursive;
+    margin-top: 0;
+    padding: 10px 20px 20px 20px;
+    margin-bottom: 0px;
+}
+
+h1 a,
+h1 a:hover {
+    color: #08758A;
+    text-decoration: none;
+}
+
+.btn.btn-custom {
+    color: #fff;
+    background-color: #d32525;
+    border-color: #9e1212;
+    border-radius: 5px;
+}
+
+.navbar.navbar-default {
+    margin-bottom: 0px;
+}
+
+body {
+    background-color: #228FD2;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.cart {
+    display: block;
+    background-color: gray;
+    padding: 10px 50px;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.content {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-right: 0px;
+    padding-left: 40px;
+    margin: 0px 0px 0px 0px;
+}
+
+.edit form input {
+    margin-bottom: 10px;
+}

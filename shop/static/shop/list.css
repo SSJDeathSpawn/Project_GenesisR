@@ -1,0 +1,29 @@
+.sidebar {
+    display: block;
+    float: left;
+}
+
+.product-list {
+    float: left;
+}
+
+div#price {
+    text-align: center;
+}
+
+.product-list a {
+    color: black;
+}
+
+ul {
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+li a {
+    display: block;
+    color: black;
+    background-color: white;
+}

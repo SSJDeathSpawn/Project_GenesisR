@@ -1,0 +1,24 @@
+{% extends "shop/base.html" %}
+{% load static %}
+<html>
+    <head>
+        <title>{% block title%}Project Genesis/Shop Index{% endblock title%}</title>
+        {% block imports %}
+        <link rel="stylesheet" href="{% static 'shop/index.css' %}" >
+        {% endblock imports %}
+    </head>
+    <body>
+    {% block content %}
+        <h1 class="title">Welcome to the Project Genesis Shop</h1>
+        <p style="font-size:1.2em;padding-bottom:10px;">Here you can find various items being sold by your favourite 
+        artists, companies, youtubers etc. This site is was built to 
+        promote an easy way of communication as not a lot of people will now 
+        a person is selling some item unless they directly follow him on twitter, 
+        facebook etc.</p>
+        <h1 class="title">At the top our list:</h1>
+        <ul>
+            <li>Some things</li>
+        </ul>
+    {% endblock content %}
+    </body>
+</html>

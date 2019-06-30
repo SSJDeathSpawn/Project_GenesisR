@@ -45,6 +45,7 @@ class UserExtendedR(AbstractBaseUser, PermissionsMixin):
     aboutme = models.CharField('bio', max_length=200, null=True)
     avatar = models.ImageField('avatar', blank=True, null=True, upload_to='images/')
     date_joined = models.DateField('date joined',default=timezone.now)
+    post_liked = models.ManyToManyField('status.Post', null=True, blank=True)
     is_active = models.BooleanField('is active', default=True)
     is_staff = models.BooleanField('is staff', default=False)
     is_superuser = models.BooleanField('is superuser', default=False)

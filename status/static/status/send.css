@@ -1,0 +1,11 @@
+.send input {
+    margin-bottom: 10px;
+}
+
+td .btn.btn-custom {
+    margin-top: 10px;
+}
+
+th {
+    vertical-align: top;
+}

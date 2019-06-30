@@ -1,0 +1,33 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}Project Genesis/Shop List{% if category %}/ {{category.name}}{% endif %}{% endblock title %}</title>
+
+{% block imports %}
+    <link rel="stylesheet" href="{% static 'shop/list.css' %}" >
+{% endblock imports %}
+        
+{% block content %}
+    <div class="sidebar">
+        <h3>Categories</h3>
+        <ul>
+            {% for c in categories %}
+                <li {% if category.slug == c.slug %}class="selected"{%endif%}>
+                    <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="product-list">
+        <h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+        {% for product in products %}
+            <div class="item">
+                <a href="{{ product.get_absolute_url }}">
+                    <img src="{% if product.img %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" height=20% width=20%>
+                    {{product.name}}
+                </a><br />
+                <div id="price">{{ product.price }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

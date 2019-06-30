@@ -5,7 +5,7 @@
         <meta charset='UTF-8' />
         <title>{% block title %}Project Genesis/Status{% endblock title %}</title>
         {% block imports %}
-        <link rel="stylesheet" href="{% static 'css/send.css' %}">
+        <link rel="stylesheet" href="{% static 'status/send.css' %}">
         {% endblock imports %}
     </head>
     <body>
@@ -16,7 +16,7 @@
             {{ form.as_table }}
             {% csrf_token %}
             <tr>
-                <td><input type="submit" value="Post"></td>
+                <td><input type="submit" class="btn btn-custom" value="Post"></td>
             </tr>
         </table>
         </form>

@@ -4,12 +4,16 @@
     <head>
         <title>{% block title %}Project Genesis/Status{% endblock title %}</title>
         {% block imports %}
-        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+        <link rel="stylesheet" href="{% static 'status/index.css' %}">
         {% endblock imports %}
     </head>
     <body>
         {% block content %}
-        <h1>Index</h1>
+        {% if user.is_authenticated %}
+            <h1 class="title">Hello, {{ user.username }}</h1>
+        {% else %}
+            <h1 class="title">Hello</h1>
+        {% endif %}
         <p>Hello and welcome to our index page of Project Genesis/Status page</p>
         <p>In this part of the website you will be able to post out statuses that allow fans to see what you're up to<br>
         This also lets them now that you're not fully dead if you don't produce any content &#128523</p>
