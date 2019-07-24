@@ -14,15 +14,17 @@
         {% else %}
             <h1 class="title">Hello</h1>
         {% endif %}
-        <p>Hello and welcome to our index page of Project Genesis/Status page</p>
-        <p>In this part of the website you will be able to post out statuses that allow fans to see what you're up to<br>
-        This also lets them now that you're not fully dead if you don't produce any content &#128523</p>
+        <p>Hello and welcome to our index page of Project Genesis.</p>
+        <p>This website allows you to sell merchandise and tell fans about any discounts or extra item you are selling
+        This way you can get our message out saying you <b>are</b> selling something and sell it here at the same time.</p>
         {% if user %}
             <a href="{% url 'status:post' %}" class="index"> Post a Status</a> <br>
             <a href="{% url 'user:user' user %}" class="index"> Visit your page</a>
         {% else %}
             <a href="{% url 'user:login' %}" class="index">Login</a>
         {% endif %}
+        <br><br><br><br><br>
+        <p>If you are interested in selling your products, <a href="{% url 'status:contact' %}">click here</a></p>
         {% endblock content %}
     </body>
 </html>

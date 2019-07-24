@@ -1,0 +1,21 @@
+{% extends "status/base.html" %}
+{% load static %}
+<html>
+<head>
+<title>{% block title %}Project Genesis/Status{% endblock title %}</title>
+{% block imports %}
+<link rel="stylesheet" href="{% static 'status/user.css' %}">
+{% endblock imports %}
+<meta charset="UTF-8" />
+</head>
+<body>
+    {% block content %}
+    <h1>Status Feed</h1>
+    <ul>
+        {% for l in list %}
+            <li><a href="{% url 'status:details' l.pk %}" class="list">{{ l.user.username }} - {{ l.title }}</a>
+        {% endfor %}
+    </ul>
+    {% endblock content %}
+</body>
+</html>

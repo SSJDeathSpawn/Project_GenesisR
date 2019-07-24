@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Exo+2|Open+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'shop/font.css' %}">
         <link rel="stylesheet" href="{% static 'shop/main.css' %}">
         {% block imports %} {% endblock imports%}
         <title>{% block title %}{% endblock %}</title>
@@ -30,7 +30,8 @@
                     <li><a onclick="openNav()" style="cursor:pointer;"><span class="glyphicon glyphicon-list" ></span>Category</a></li>
                     <li><a href="{% url 'status:index' %}">Home</a></li>
                     {% if user.is_authenticated %}
-                    <li><a href="{% url 'status:user' user.username %}">Your Feed</a></li>
+                    <li><a href="{% url 'status:user' user.username %}">Your Statuses</a></li>
+                    <li><a href="{% url 'status:feed' %}">Status Feed</a></li>
                     {% endif %}
                     <li><a href="{% url 'shop:index' %}">Shop</a></li>
                     {% if user.is_authenticated %}
@@ -49,9 +50,6 @@
                 {% endif %}
             </div>
         </nav>
-        <div class="cart">
-                Your cart is empty
-        </div>
         {% block sidebar %}
         {% endblock sidebar %}
         <div class="content container">

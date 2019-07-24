@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.template import loader
 from django.contrib import messages
 from django.utils import timezone
+from django.db.models.query import QuerySet
 from django.contrib.auth.models import User
 from django import forms
 from .models import *
@@ -99,6 +100,20 @@ def replyto(request, no):
     }
     return render(request, 'status/replyto.html', context=context)
 
+def feed(request):
+    if request.user.is_authenticated:
+        lst = Post.objects.none()
+        for user in request.user.following.all():
+            print(user)
+            lst = lst | user.post_set.all()
+        lst = lst.distinct().order_by('-pub_date')
+        context = {
+            'user': request.user,
+            'list': lst
+        }
+        return render(request, 'status/feed.html', context=context)
+    else:
+        return HttpResponse('You must be logged in to do that!')
 
 def like(request, id):
     try:
@@ -129,3 +144,6 @@ def unlike(request,id):
         else:
             return HttpResponse('You have to be logged in to do this!')
     return redirect('status:details', id)
+
+def contact(request):
+    return render(request, 'status/contact.html')

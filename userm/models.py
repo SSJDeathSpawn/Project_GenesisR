@@ -6,12 +6,14 @@ class FollowContact(models.Model):
     class Meta:
         verbose_name = "Contact"
         verbose_name_plural = "Contacts"
+        ordering = ('-created',)
 
-    user_from = models.ForeignKey('userm.UserExtendedR', related_name="user_from", on_delete=models.CASCADE)
-    user_to= models.ForeignKey('userm.UserExtendedR', related_name="user_to", on_delete=models.CASCADE)
-    
+    user_from = models.ForeignKey('userm.UserExtendedR', related_name="user_from_set", on_delete=models.CASCADE)
+    user_to= models.ForeignKey('userm.UserExtendedR', related_name="user_to_set", on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+
     def __str__(self):
-        return self.user_from.username + "-" + self.user_to.username
+        return self.user_from.username + " follows " + self.user_to.username
 
 class UserExtendedManager(BaseUserManager):
     def create_user(self, username, email, password, **extra_fields):
@@ -49,6 +51,7 @@ class UserExtendedR(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField('is active', default=True)
     is_staff = models.BooleanField('is staff', default=False)
     is_superuser = models.BooleanField('is superuser', default=False)
+    following = models.ManyToManyField('self', through=FollowContact, related_name='followers', symmetrical=False)
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["email"]

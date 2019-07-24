@@ -23,8 +23,10 @@
         <div class="details-bio">
             Bio: {{ user.aboutme | linebreaksbr}}
         </div>
-        {% if contact %}
-            <a href="{% url 'userm:friend' user.username request.user.username %}" class="btn btn-info" role="button">Reply</a> 
+        {% if not contact %}
+            <a href="{% url 'user:friend' user.username request.user.username %}" class="btn btn-info" role="button">Follow</a> 
+        {% else %}
+            <a href="{% url 'user:unfriend' user.username request.user.username %}" class="btn btn-info" role="button">Unfollow</a>
         {% endif %}
         {% endblock %}
     </body>

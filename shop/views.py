@@ -27,7 +27,7 @@ def product_detail(request, id, slug):
     form = AddImageForm()
     user = request.user
     categories = Category.objects.all()
-    product = get_object_or_404(Item, id=id, slug=slug, available=True)
+    product = get_object_or_404(Item, id=id, slug=slug)
     if user.is_authenticated and user == product.seller and request.method == 'POST':
         form = AddImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -36,21 +36,22 @@ def product_detail(request, id, slug):
             photo.save()
     return render(request, 'shop/detail.html', {'product': product, 'user': user, 'categories' : categories, 'form': form})
 
-def add_item(request):
-    user = request.user
-    if not user.is_authenticated:
-        return HttpResponse('You must be logged in to perform this option!')
-    form=ItemForm()
-    if request.method == 'POST':
-        form = ItemForm(request.POST, request.FILES)
-        if form.is_valid():
-            cd = form.cleaned_data
-            category = Category.objects.get(name=cd['category'])
-            item = Item(name=cd['name'], description=cd['description'], slug=cd['slug'], price=cd['price'], stock=cd['stock'], seller=user, category=category)
-            print(type(cd['main_image']))
-            photo = Photo(photo=cd['main_image'], item=item)
-            item.save()
-            photo.save()
-            return redirect('shop/list', cd['category'].name)
+def payment(request, id, slug):
+    form = FakePaymentForm()
+    user =request.user
+    categories = Category.objects.all()
+    product = get_object_or_404(Item, id=id, slug=slug)
+    if user.is_authenticated:
+        if request.method == 'POST':
+            form = FakePaymentForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                print("Payment succeeded")
+                print("Name:", cd['name'])
+                print("Address:", cd['address'])
+                print("Payment Method:", cd['pay_method'])
+                return HttpResponse("Thank you for using our web service!<br>Payment has succeeded!")
+    else:
+        return HttpResponse('You must be logged in to do that!')
 
-    return render(request, 'shop/add.html', {'user': user, 'form': form})
+    return render(request, 'shop/payment.html', {'product': product, 'user': user, 'categories': categories, 'form': form})

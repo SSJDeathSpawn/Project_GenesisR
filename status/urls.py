@@ -10,4 +10,6 @@ urlpatterns = [
     path('replyto/<int:no>/',views.replyto, name='replyto'),
     path('like/<int:id>/', views.like, name='like'),
     path('unlike/<int:id>/', views.unlike, name='unlike'),
+    path('contact/', views.contact, name='contact'),
+    path('feed/', views.feed, name='feed'),
 ]

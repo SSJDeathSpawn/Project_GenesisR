@@ -42,8 +42,8 @@ li a {
 }
 
 .product-detail img {
-    height: 35%;
-    width: 35%;
+    height: 300px;
+    width: 400px;
     float: left;
 }
 
@@ -56,5 +56,5 @@ li a {
 }
 
 .details {
-    margin-left: 400px;
+    margin-left: 430px;
 }

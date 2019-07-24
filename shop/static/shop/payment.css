@@ -1,0 +1,55 @@
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.25s;
+    padding-top: 60px;
+}
+
+.sidebar a:hover {
+    color: white;
+    background-color: black;
+    text-decoration: none;
+}
+
+.sidebar a {
+    color: black;
+    background-color: white;
+    text-decoration: none;
+}
+
+ul {
+    display: inline;
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+li a {
+    padding: 10px 0px;
+    display: block;
+    color: black;
+    background-color: white;
+}
+
+.title {
+    font-family: 'Exo 2', sans-serif;
+}
+
+table th {
+    text-transform: capitalize;
+}
+
+table input {
+    margin-bottom: 20px;
+}
+
+.btn.btn-custom {
+    margin-top: 10px;
+    margin-left: 50px;
+}

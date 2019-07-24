@@ -10,5 +10,10 @@ class ItemForm(forms.Form):
     stock = forms.IntegerField()
     main_image = forms.ImageField()
 
+class FakePaymentForm(forms.Form):
+    name = forms.CharField()
+    address = forms.CharField(widget=forms.Textarea)
+    pay_method = forms.ChoiceField(choices=[('Cash', 'Cash On Delivery'), ('Card', 'Credit/Debit Card'), ('IB', 'Intenet Banking')])
+
 class AddImageForm(forms.Form):
     image = forms.ImageField()

@@ -1,0 +1,35 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}Project Genesis/Payment{% endblock title %}
+
+{% block imports %}
+    <link rel="stylesheet" href="{% static 'shop/payment.css' %}">
+{% endblock imports %}
+
+{% block sidebar %}
+<div id="mySidenav" class="sidebar">
+        <span style="font-size:2em;">Categories</span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="glyphicon glyphicon-remove"></span></a>
+        <ul>
+            {% for c in categories %}
+                <li {% if category.slug == c.slug %}class="selected"{%endif%} style="font-size=1.6em;">
+                    <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+</div>
+{% endblock sidebar %}
+
+{% block content %}
+    <h1 class="title">Payment</h1>
+    <h3 class="title">{{product.name}}</h3>
+    <form method="post" action=".">
+        <table border=0>
+            {{ form.as_table }}
+            {% csrf_token %}
+            <tr>
+                <td colspan=2><input type="submit" class="btn btn-custom" value="Confirm Payment"></td>
+            </tr>
+        </table>
+    </form>
+{% endblock content %}

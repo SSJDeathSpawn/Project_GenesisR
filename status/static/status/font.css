@@ -1,0 +1,28 @@
+/* exo-2-regular - latin */
+
+@font-face {
+    font-family: 'Exo 2';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Exo 2'), local('Exo2-Regular'), url('exo-2-v5-latin-regular.woff2') format('woff2'), url('exo-2-v5-latin-regular.woff') format('woff');
+}
+
+
+/* kaushan-script-regular - latin */
+
+@font-face {
+    font-family: 'Kaushan Script';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Kaushan Script'), local('KaushanScript-Regular'), url('kaushan-script-v7-latin-regular.woff2') format('woff2'), url('kaushan-script-v7-latin-regular.woff') format('woff');
+}
+
+
+/* open-sans-regular - latin */
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans Regular'), local('OpenSans-Regular'), url('open-sans-v16-latin-regular.woff2') format('woff2'), url('open-sans-v16-latin-regular.woff') format('woff');
+}

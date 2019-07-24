@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import AdminPasswordChangeForm
 from .forms import UserCreationFormR, UserChangeFormR
 from django.urls import path
-from .models import UserExtendedR
+from .models import UserExtendedR,FollowContact
 from django.conf import settings
 from django.contrib import admin, messages
 from django.contrib.admin.options import IS_POPUP_VAR
@@ -197,3 +197,4 @@ class UserAdminR(admin.ModelAdmin):
 
 
 admin.site.register(UserExtendedR, UserAdminR)
+admin.site.register(FollowContact)

@@ -48,7 +48,9 @@ Project Genesis/Details{% if product %}/{{ product.name }}{% endif %}
                         <td colspan=2><input type="submit" class="btn btn-custom" value="Add"></td>
                     </tr>
                 </table>
-            </form>
+            </form></p>
+        {% else %}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-custom" href="{% url 'shop:payment' product.id product.slug%}">Buy</a>
         {% endif %}
     </div>
 {% endblock content %}

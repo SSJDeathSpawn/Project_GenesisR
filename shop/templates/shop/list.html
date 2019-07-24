@@ -26,12 +26,12 @@
         <h1 class="title">{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
         {% for product in products %}
             <div class="item">
-                <a href="{{ product.get_absolute_url }}">
-                    <img src="{% if product|first_image %}{{ product|first_image }}{% else %}{% static 'img/no_image.png' %}{% endif %}" height=500% width=100%><br>
-                    <div id="title">{{product.name}}</div>
-                </a><br />
-                <div id="price">{{ product.price }}</div>
+                <a href="{{ product.get_absolute_url }}"><img src="{% if product|first_image %}{{ product|first_image }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="image"></a>
+                <h3><div id="title" style="float:left;">Name: <a href="{{ product.get_absolute_url }}">{{product.name}}</a></div><h3><br>
+                <h4><div id="title" style="float:left;">By: <a href="{% url 'user:user' product.seller %}" >{{product.seller}}</a></div></h4><br>
+                <div id="price"><h4>{{ product.price }}</h4></div>
             </div>
+            <hr width="100%" align="center">
         {% endfor %}
     </div>
 {% endblock content %}
