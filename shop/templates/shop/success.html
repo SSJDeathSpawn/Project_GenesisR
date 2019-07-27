@@ -1,0 +1,35 @@
+{% extends "shop/base.html" %}
+{% load static %}
+{% load filters %}
+
+{% block title %}
+Project Genesis/Details{% if product %}/{{ product.name }}{% endif %}
+{% endblock title %}
+
+{% block imports %}
+    <link rel="stylesheet" href="{% static 'shop/index.css' %}" >
+{% endblock imports %}
+
+{% block sidebar %}
+<div id="mySidenav" class="sidebar">
+        <span style="font-size:2em;">Categories</span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="glyphicon glyphicon-remove"></span></a>
+        <ul>
+            {% for c in categories %}
+                <li {% if category.slug == c.slug %}class="selected"{%endif%} style="font-size=1.6em;">
+                    <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+</div>
+{% endblock sidebar %}
+
+{% block content %}
+    <div class="title"><h1>Thank you for using our website/services</h1></div>
+    <p><h4>Please visit us again!</h4></p>
+    <h2 class="title">Our categories:</h2>
+    <ul>
+        {% for category in categories %}
+            <li><a href="{% url 'shop:list' category.slug %}">{{category.name}}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

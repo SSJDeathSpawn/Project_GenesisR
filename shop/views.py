@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render,get_object_or_404, redirect
 from django.core.files import File
+from django.core.paginator import Paginator
 from .models import *
 from .forms import *
 
@@ -11,12 +12,15 @@ def index(request):
 def product_list(request, category_slug=None):
     category=None
     categories = Category.objects.all()
-    products = Item.objects.filter(available=True)
+    prod = Item.objects.filter(available=True)
     user= request.user
     if category_slug is not None:
         print(category_slug)
         category = get_object_or_404(Category, slug=category_slug)
-        products = products.filter(category=category)
+        prod = prod.filter(category=category)
+        paginator = Paginator(prod, 10)
+        page = request.GET.get('page')
+        products = paginator.get_page(page)
     return render(request, 'shop/list.html', {
         'category': category,
         'categories': categories,
@@ -36,6 +40,10 @@ def product_detail(request, id, slug):
             photo.save()
     return render(request, 'shop/detail.html', {'product': product, 'user': user, 'categories' : categories, 'form': form})
 
+def success(request):
+    categories = Category.objects.all()
+    return render(request, 'shop/success.html', context={'user': request.user, 'categories': categories})
+
 def payment(request, id, slug):
     form = FakePaymentForm()
     user =request.user
@@ -50,7 +58,7 @@ def payment(request, id, slug):
                 print("Name:", cd['name'])
                 print("Address:", cd['address'])
                 print("Payment Method:", cd['pay_method'])
-                return HttpResponse("Thank you for using our web service!<br>Payment has succeeded!")
+                return redirect("shop:success")
     else:
         return HttpResponse('You must be logged in to do that!')
 

@@ -1,5 +1,5 @@
 .page-header {
-    background-color: #8A0875;
+    background-color: #7f398d;
     font-family: 'Kaushan Script', cursive;
     margin-top: 0;
     padding: 10px 20px 20px 20px;
@@ -19,8 +19,8 @@
     border-radius: 5px;
 }
 
-.navbar.navbar-default {
-    margin-bottom: 0px;
+.navbar {
+    margin-bottom: 10px;
 }
 
 body {

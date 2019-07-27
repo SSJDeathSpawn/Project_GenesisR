@@ -1,27 +1,59 @@
 {% extends "userm/base.html" %}
 {% load static %}
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Project Genesis/Login{% endblock title%}</title>
-        {% block imports %}
-            <link rel="stylesheet" href="{% static 'css/login.css' %}">
-        {% endblock imports %}
-    </head>
-    <body>
-        {% block content %}
-            <h1 style="padding-bottom:10px;" class="heading">Log in</h1>
-            <div class="login-form">
-                <form action="." method="post">
-                    <table border=0>
-                        {{ form.as_table }}
-                        {% csrf_token %}
-                    <tr>
-                        <td colspan=2 align="center"><input type="submit" class="btn btn-custom" value="Login"></td>
-                    </tr>
-                    </table>
-                </form>
-            </div>
-        {% endblock content %}
-    </body>
-</html>
+
+{% block title %}Project Genesis/Login{% endblock title%}</title>
+{% block imports %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock imports %}
+
+{% block navbar %}
+            <nav class="navbar navbar-expand-md navbar-dark" style="background-color:rgb(91, 90, 95);">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'status:index' %}">Home<span class="sr-only">(current)</span></a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'status:user' user.username %}">Your Statuses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'status:feed' %}">Status Feed</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'shop:index' %}">Shop</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user:edit' %}">Profile</a></li>
+                        {% endif %}
+                    </ul>
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}"><span class="oi oi-account-logout" title="icon account-logout" aria-hidden="true"></span>&nbspLogout</a></li>
+                        {% else %}  
+                                <li class="nav-item"><a class="nav-link" href="{% url 'user:signup' %}"><span class="oi oi-person" title="icon person" aria-hidden="true"></span>&nbspSign Up</a></li>
+                                <li class="nav-item active"><a class="nav-link" href="{% url 'user:login' %}"><span class="oi oi-account-login" title="icon account-login" aria-hidden="true"></span>&nbspLogin</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        {% endblock navbar %}
+
+{% block content %}
+    <h1 style="padding-bottom:10px;" class="heading">Log in</h1>
+    <div class="login-form">
+        <form action="." method="post">
+            <table border=0>
+                {{ form.as_table }}
+                {% csrf_token %}
+            <tr>
+                <td colspan=2 align="center"><input type="submit" class="btn btn-custom" value="Login"></td>
+            </tr>
+            </table>
+        </form>
+    </div>
+{% endblock content %}

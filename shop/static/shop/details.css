@@ -21,14 +21,14 @@
     background-color: white;
 }
 
-ul {
+ul.cat {
     display: inline;
     margin: 0px;
     padding: 0px;
     list-style-type: none;
 }
 
-li a {
+li a.cat {
     padding: 10px 0px;
     display: block;
     color: black;

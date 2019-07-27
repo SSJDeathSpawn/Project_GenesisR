@@ -14,6 +14,6 @@ class FakePaymentForm(forms.Form):
     name = forms.CharField()
     address = forms.CharField(widget=forms.Textarea)
     pay_method = forms.ChoiceField(choices=[('Cash', 'Cash On Delivery'), ('Card', 'Credit/Debit Card'), ('IB', 'Intenet Banking')])
-
+    card = forms.ChoiceField(choices=[('Mastercard', "MasterCard"), ('AmEx', "American Express"), ('Visa', "Visa Card")], required=False, widget=forms.HiddenInput)
 class AddImageForm(forms.Form):
     image = forms.ImageField()

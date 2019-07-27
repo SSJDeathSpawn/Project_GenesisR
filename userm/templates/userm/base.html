@@ -3,10 +3,13 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'shop/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap/open-iconic-bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap/open-iconic-bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap/open-iconic.css' %}">
         <link rel="stylesheet" href="{% static 'shop/font.css' %}">
-        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" href="{% static 'shop/main.css' %}">
+        <script src="{% static 'shop/bootstrap.min.js' %}"></script>
         {% block imports %} {% endblock imports%}
         <title>{% block title %}{% endblock %}</title>
     </head>
@@ -14,34 +17,45 @@
         <div class="page-header">
             <h1><a href="{% url 'status:index' %}">Project Genesis</a></h1>
         </div>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <ul class="nav navbar-nav">
-                    <li><a href="{% url 'status:index' %}">Home</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'status:user' user.username %}">Your Statuses</a></li>
-                    <li><a href="{% url 'status:feed' %}">Status Feed</a></li>
-                    {% endif %}
-                    <li><a href="{% url 'shop:index' %}">Shop</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'user:edit' %}">Profile</a></li>
-                    {% endif %}
-                </ul>
-                {% if user.is_authenticated %}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{% url 'user:logout' %}"><span class="glyphicon glyphicon-log-out"></span>&nbspLogout</a></li>
+        {% block navbar %}
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'status:index' %}">Home<span class="sr-only">(current)</span></a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'status:user' user.username %}">Your Statuses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'status:feed' %}">Status Feed</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'shop:index' %}">Shop</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user:edit' %}">Profile</a></li>
+                        {% endif %}
                     </ul>
-                {% else %}  
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{% url 'user:signup' %}"><span class="glyphicon glyphicon-user"></span>&nbspSign Up</a></li>
-                        <li><a href="{% url 'user:login' %}"><span class="glyphicon glyphicon-log-in"></span>&nbspLogin</a></li>
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}"><span class="oi oi-account-logout" title="icon account-logout" aria-hidden="true"></span>&nbspLogout</a></li>
+                        {% else %}  
+                                <li class="nav-item"><a class="nav-link" href="{% url 'user:signup' %}"><span class="oi oi-person" title="icon person" aria-hidden="true"></span>&nbspSign Up</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'user:login' %}"><span class="oi oi-account-login" title="icon account-login" aria-hidden="true"></span>&nbspLogin</a></li>
+                        {% endif %}
                     </ul>
-                {% endif %}
-            </div>
-        </nav>
+                </div>
+            </nav>
+        {% endblock navbar %}
          <div class="content container">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     {% block content %}
                     {% endblock %}
                 </div>

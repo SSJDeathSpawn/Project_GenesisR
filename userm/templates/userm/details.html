@@ -1,33 +1,66 @@
 {% extends "userm/base.html" %}
 {% load static %}
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Project Genesis/User Details{% endblock %}</title>
-        {% block imports %}
-            <link rel="stylesheet" href="{% static 'css/details.css' %}">
-        {% endblock imports %}
-    </head>
-    <body>
-        {% block content %}
-        <h1 class="details-username">{{user.username}}</h1>
-        <br />
-        <div class="details-avatar">
-            {% if not user.avatar %}
-            <h3> The user doesn't have any image</h3>
-            {% else %}
-            <img src="{{ user.avatar.url }}" alt="{{user.username}}" height=300 width=400>
-            {% endif %}
-        </div>
-        <br />
-        <div class="details-bio">
-            Bio: {{ user.aboutme | linebreaksbr}}
-        </div>
-        {% if not contact %}
-            <a href="{% url 'user:friend' user.username request.user.username %}" class="btn btn-info" role="button">Follow</a> 
+
+{% block title %}Project Genesis/User Details{% endblock %}
+
+{% block imports %}
+    <link rel="stylesheet" href="{% static 'css/details.css' %}">
+{% endblock imports %}
+
+{% block navbar %}
+            <nav class="navbar navbar-expand-md navbar-dark" style="background-color:rgb(91, 90, 95);">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'status:index' %}">Home<span class="sr-only">(current)</span></a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'status:user' user.username %}">Your Statuses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'status:feed' %}">Status Feed</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'shop:index' %}">Shop</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user:edit' %}">Profile</a></li>
+                        {% endif %}
+                    </ul>
+                    <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}"><span class="oi oi-account-logout" title="icon account-logout" aria-hidden="true"></span>&nbspLogout</a></li>
+                        {% else %}  
+                                <li class="nav-item"><a class="nav-link" href="{% url 'user:signup' %}"><span class="oi oi-person" title="icon person" aria-hidden="true"></span>&nbspSign Up</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{% url 'user:login' %}"><span class="oi oi-account-login" title="icon account-login" aria-hidden="true"></span>&nbspLogin</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        {% endblock navbar %}
+
+{% block content %}
+    <h1 class="details-username">{{user.username}}</h1>
+    <br />
+    <div class="details-avatar">
+        {% if not user.avatar %}
+        <h3> The user doesn't have any image</h3>
         {% else %}
-            <a href="{% url 'user:unfriend' user.username request.user.username %}" class="btn btn-info" role="button">Unfollow</a>
+        <img src="{{ user.avatar.url }}" alt="{{user.username}}" height=300 width=400>
         {% endif %}
-        {% endblock %}
-    </body>
-<html>
+    </div>
+    <br />
+    <div class="details-bio">
+        Bio: {{ user.aboutme | linebreaksbr}}
+    </div>
+    {% if not contact %}
+        <a href="{% url 'user:friend' user.username request.user.username %}" class="btn btn-info" role="button">Follow</a> 
+    {% else %}
+        <a href="{% url 'user:unfriend' user.username request.user.username %}" class="btn btn-info" role="button">Unfollow</a>
+    {% endif %}
+{% endblock %}

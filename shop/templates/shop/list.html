@@ -8,18 +8,60 @@
     <link rel="stylesheet" href="{% static 'shop/list.css' %}" >
 {% endblock imports %}
 
+{% block navbar %}
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color:rgb(91, 90, 95);">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" onclick="openNav()" style="cursor:pointer;"><span class="oi oi-menu" title="icon menu" aria-hidden="true"></span>Category</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'status:index' %}">Home<span class="sr-only">(current)</span></a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'status:user' user.username %}">Your Statuses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'status:feed' %}">Status Feed</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop:index' %}">Shop</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'user:edit' %}">Profile</a></li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}"><span class="oi oi-account-logout" title="icon account-logout" aria-hidden="true"></span>&nbspLogout</a></li>
+                {% else %}  
+                        <li class="nav-item"><a class="nav-link" href="{% url 'user:signup' %}"><span class="oi oi-person" title="icon person" aria-hidden="true"></span>&nbspSign Up</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'user:login' %}"><span class="oi oi-account-login" title="icon account-login" aria-hidden="true"></span>&nbspLogin</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+{% endblock navbar %}
+
 {% block sidebar %}
 <div id="mySidenav" class="sidebar">
-        <span style="font-size:2em;">Categories</span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="glyphicon glyphicon-remove"></span></a>
-        <ul>
+        <span style="font-size:2em;float:none;">Categories</span>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="oi oi-x" title="icon x" aria-hidden="true"></span></a>
+        <ul class="cat">
             {% for c in categories %}
                 <li {% if category.slug == c.slug %}class="selected"{%endif%} style="font-size=1.6em;">
-                    <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+                    <a class="cat" href="{{ c.get_absolute_url }}">{{ c.name }}</a>
                 </li>
             {% endfor %}
         </ul>
 </div>
 {% endblock sidebar %}
+
+
 
 {% block content %}
     <div class="product-list">
@@ -27,11 +69,33 @@
         {% for product in products %}
             <div class="item">
                 <a href="{{ product.get_absolute_url }}"><img src="{% if product|first_image %}{{ product|first_image }}{% else %}{% static 'img/no_image.png' %}{% endif %}" class="image"></a>
-                <h3><div id="title" style="float:left;">Name: <a href="{{ product.get_absolute_url }}">{{product.name}}</a></div><h3><br>
-                <h4><div id="title" style="float:left;">By: <a href="{% url 'user:user' product.seller %}" >{{product.seller}}</a></div></h4><br>
-                <div id="price"><h4>{{ product.price }}</h4></div>
+                <h3>
+                    <div id="title" style="float:left;">
+                        Name: <a href="{{ product.get_absolute_url }}">{{product.name}}</a>
+                    </div>
+                </h3><br>
+                <h4>
+                    <div id="title" style="float:left;">
+                        By: <a href="{% url 'user:user' product.seller %}" >{{product.seller}}</a>
+                    </div>
+                </h4><br>
+                <h5><div id="price" style="float:left;">{{ product.price }}</div></h5><br>
             </div>
-            <hr width="100%" align="center">
         {% endfor %}
     </div>
+    {% if contacts.has_previous %}
+        <span class="previous" style="float:left;display:block;padding:10px;margin:1px;margin-bottom:30px">
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ products.previous_page_number }}">previous</a>
+        </span>
+    {% endif %}
+    <span class="current" style="float:left;display:block;padding:10px;margin:1px;margin-bottom:30px">
+        Page {{ products.number }} of {{ products.paginator.num_pages }}.
+    </span>
+    {% if contacts.has_previous %}
+        <span class="next" style="float:left;display:block;padding:10px;margin:1px;margin-bottom:30px">
+            <a href="?page={{ products.next_page_number }}">next</a>
+            <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
+        </span>
+    {% endif %}
 {% endblock content %}

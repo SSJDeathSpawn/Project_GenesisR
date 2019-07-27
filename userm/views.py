@@ -76,7 +76,7 @@ def user_details(request, username):
             'user' : user,
             'request': request,
             'show': request.user.is_authenticated and user != request.user,
-            'contact': contact
+            'contact': contact,
         }
         return render(request, 'userm/details.html', context=context)
 
