@@ -28,11 +28,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'shop:index' %}">Shop</a>
                 </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'user:edit' %}">Profile</a></li>
-                {% endif %}
             </ul>
             <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'user:edit' %}">Edit Profile</a></li>
+                {% endif %}
                 {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}"><span class="oi oi-account-logout" title="icon account-logout" aria-hidden="true"></span>&nbspLogout</a></li>
                 {% else %}  
@@ -46,9 +46,10 @@
 
 {% block content %}
 <h1>{{ user.username }}</h1>
+    <p>Here you can view the statuses you have sent in the past. It is ordered date-wise</p>
 <ul class="background">
-    {% for post in user.post_set.all %}
-        <li><a href="{% url 'status:details' post.pk %}" class="list">{{ post.title }}</a></li>
+    {% for post in posts %}
+        <li><a href="{% url 'status:details' post.pk %}" class="list">{{ post.title }}<span style="float:right;">{{ post.likes }} like{{ post.likes|pluralize }}</span></a></li>
     {% endfor %}
 </ul>
 {% endblock content %}

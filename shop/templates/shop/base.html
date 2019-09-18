@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,6 +25,24 @@
     <body>
         <div class="page-header">
             <h1><a href="{% url 'status:index' %}">Project Genesis</a></h1>
+            <form action="." method="post" autocomplete="off" onsubmit="validate()" name="search">
+                {% csrf_token %}
+                <div class="form-row align-items-center justify-content-center" style="font-family: 'Blinker', sans-serif;">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Search for items." name="text">
+                    </div>
+                    <div class="col-auto">
+                        <select class="custom-select custom-select" name="type">
+                            <option selected value="3">Products</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-outline-dark btn-dark" name="searchb">
+                            Search <span class="oi oi-magnifying-glass" title="icon magnifying-glass" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div></div>
+            </form>
         </div>
         {% block navbar %}
             <nav class="navbar navbar-expand-md navbar-dark" style="background-color:rgb(132, 131, 136);">

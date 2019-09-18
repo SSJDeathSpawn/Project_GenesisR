@@ -15,7 +15,26 @@
     </head>
     <body>
         <div class="page-header">
-            <h1><a href="{% url 'status:index' %}">Project Genesis</a></h1>
+            <h1 style="display:inline;"><a href="{% url 'status:index' %}">Project Genesis</a></h1>
+            <form action="." method="post" autocomplete="off" onsubmit="validate()" name="search">
+                {% csrf_token %}
+                <div class="form-row align-items-center justify-content-center" style="font-family: 'Blinker', sans-serif;">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Search for people, feeds etc." name="text">
+                    </div>
+                    <div class="col-auto">
+                        <select class="custom-select custom-select" name="type">
+                            <option selected value="1">People</option>
+                            <option value="2">Posts</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-outline-dark btn-dark" name="searchb">
+                            Search <span class="oi oi-magnifying-glass" title="icon magnifying-glass" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </div></div>
+            </form>
         </div>
         {% block navbar %}
             <nav class="navbar navbar-expand-md navbar-dark" style="background-color:rgb(91, 90, 95);">
@@ -38,11 +57,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'shop:index' %}">Shop</a>
                         </li>
-                        {% if user.is_authenticated %}
-                            <li class="nav-item"><a class="nav-link" href="{% url 'user:edit' %}">Profile</a></li>
-                        {% endif %}
                     </ul>
                     <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'user:edit' %}">Edit Profile</a></li>
+                        {% endif %}
                         {% if user.is_authenticated %}
                                 <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}"><span class="oi oi-account-logout" title="icon account-logout" aria-hidden="true"></span>&nbspLogout</a></li>
                         {% else %}  

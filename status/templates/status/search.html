@@ -2,11 +2,11 @@
 {% load static %}
 {% load userfil %}
 
-{% block title %}Project Genesis/Status{% endblock title %}
-
 {% block imports %}
-    <link rel="stylesheet" href="{% static 'status/details.css' %}">
+    <link rel="stylesheet" href="{% static 'status/user.css' %}">
 {% endblock imports %}
+
+{% block title %}Search Results{% endblock title %}
 
 {% block navbar %}
     <nav class="navbar navbar-expand-md navbar-dark" style="background-color:rgb(91, 90, 95);">
@@ -29,11 +29,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'shop:index' %}">Shop</a>
                 </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'user:edit' %}">Profile</a></li>
+                {% endif %}
             </ul>
             <ul class="navbar-nav">
-                {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'user:edit' %}">Edit Profile</a></li>
-                {% endif %}
                 {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'user:logout' %}"><span class="oi oi-account-logout" title="icon account-logout" aria-hidden="true"></span>&nbspLogout</a></li>
                 {% else %}  
@@ -46,21 +46,29 @@
 {% endblock navbar %}
 
 {% block content %}
-    <h1 class="det-title"> {{ post.title }}</h1>
-    <div class="det-body">{{post.body | linebreaksbr}}<br /><p align="right">By <a href="{% url 'user:user' post.user.username %}">{{post.user.username}}</a></p></div>
-    <a href="{% url 'status:replyto' post.pk %}" class="btn btn-custom" role="button">Reply</a>
-    {% if user.is_authenticated %}
-        {% if user|get_post_if_liked_by_user:post %}
-            <div class="like active">{{ post.likes }}<a href="{% url 'status:unlike' post.pk %}"><span class="oi oi-heart" title="icon heart" aria-hidden="true"></span></a></div>
-        {% else %}
-            <div class="like">{{ post.likes }}<a href="{% url 'status:like' post.pk %}"><span class="oi oi-heart" title="icon heart" aria-hidden="true"></span></a></div>
-        {% endif %}
-    {% endif %}
-    {% if post.reply_set.all.first %}
-    <ul>
-    {% for reply in post.reply_set.all %}
-        <div class="det-reply"><li><a href="{% url 'user:user' reply.user %}">{{ reply.user }}</a> - {{ reply.text }}</div>
-    {% endfor %}
-    </ul>
-    {% endif %}
+    {% if posts or users %}
+        <h1 class="title">Search Resuts</h1>
+    {% else %}
+        <h1 class="title">We couldn't find matching results.</h1>
+    {% endif %} 
+    <div class="results">
+        <ul class="background">
+            {% if posts %}
+                {% for post in posts %}
+                    <li><a href="{% url 'status:details' post.pk %}" class="list">{{post.user.username}} - {{post.title}}</a></li>
+                {% endfor %}
+            {% elif users%}
+                {% for u in users %}
+                    <div class="user">
+                        <li><a href="{% url 'user:user' u.username %}"><img class="image" src="{% if u.avatar %}{{ u.avatar.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}" alt="{{u.username}}"></a>
+                        <a href="{% url 'user:user' u.username %}" class="list2">{{u.username}}</a>
+                        <span style="float:right;font-size:1.2em;">{{u|count}} follower{{u|count|pluralize}}</span>
+                        </li>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p style="font-size:1.3em;padding-bottom:10px;">We couldn't find any matching results, please check the spelling and try again</p>          
+            {% endif %}
+        </ul>
+    </div>
 {% endblock content %}

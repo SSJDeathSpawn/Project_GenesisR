@@ -12,4 +12,6 @@ urlpatterns = [
     path('unlike/<int:id>/', views.unlike, name='unlike'),
     path('contact/', views.contact, name='contact'),
     path('feed/', views.feed, name='feed'),
+    path('search/', views.search, name='search'),
+    path('help/',views.help, name='help')
 ]

@@ -61,25 +61,28 @@ def user_signup(request):
 
 def user_details(request, username):
     try:
-        user = UserExtendedR.objects.get(username=username)
+        usera = UserExtendedR.objects.get(username=username)
     except(KeyError, UserExtendedR.DoesNotExist):
         return HttpResponse('User does not exist!')
     else:
         if request.user.is_authenticated:
             try:
-                con = FollowContact.objects.get(user_from=request.user, user_to=user)
+                con = FollowContact.objects.get(user_from=request.user, user_to=usera)
             except(KeyError, FollowContact.DoesNotExist):
                 contact = False
             else:
                 contact = True
+        else:
+            contact = False
         context = {
-            'user' : user,
-            'request': request,
-            'show': request.user.is_authenticated and user != request.user,
+            'usera' : usera,
+            'user' : request.user, 
+            'show': request.user.is_authenticated and usera != request.user,
             'contact': contact,
         }
         return render(request, 'userm/details.html', context=context)
 
+@login_required(login_url='/userm/login')
 def edit_user(request):
     if not request.user.is_authenticated:
         return HttpResponse("You must be logged in to do that!")
@@ -119,6 +122,7 @@ def logout_user(request):
         logout(request)
         return redirect('status:index')
 
+@login_required(login_url='/userm/login')
 def friend(request, user, user2):
     try:
         user1 = UserExtendedR.objects.get(username=user)
@@ -135,6 +139,7 @@ def friend(request, user, user2):
             return HttpResponse("You are already following him")
     return redirect('user:user', user)
 
+@login_required(login_url='/userm/login')
 def unfriend(request, user, user2):
     try:
         user1 = UserExtendedR.objects.get(username=user)
